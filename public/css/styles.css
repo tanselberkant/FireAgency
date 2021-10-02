@@ -239,6 +239,11 @@ a {
   color: #ffc800;
   text-decoration: underline;
 }
+
+.mycustomPageName {
+  color: #cca000 !important;
+}
+
 a:hover {
   color: #cca000;
 }

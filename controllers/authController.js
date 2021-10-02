@@ -25,9 +25,16 @@ exports.loginUser = (req, res) => {
         bcrypt.compare(password, user.password, (err, success) => {
           if (success) {
             // User session
-            res.status(200).send('You are logged in');
+            req.session.userID = user._id;
+            res.status(200).redirect('/');
+          }else {
+            // Your password is not correct
+            res.status(400).redirect('/login');
           }
         });
+      } else {
+        // User is Not Exist!
+        res.status(400).redirect('/login')
       }
     });
   } catch (error) {
@@ -37,3 +44,15 @@ exports.loginUser = (req, res) => {
     });
   }
 };
+
+exports.logOutUser = (req,res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  })
+}
+
+exports.getDashboardPage = async (req,res) => {
+  res.status(200).render('dashboard', {
+    page_name : 'dashboard'
+  })
+}
