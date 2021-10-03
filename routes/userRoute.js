@@ -8,6 +8,7 @@ router.route('/signin').post(authController.loginUser);  //localhost:3000/users/
 router.route('/logout').get(authController.logOutUser);  //localhost:3000/users/logout
 router.route('/dashboard').get(authController.getDashboardPage);   //localhost:3000/users/dashboard
 router.route('/dashboard').post(authController.createPortfolio);   //localhost:3000/users/dashboard
+router.route('/dashboard/:id').delete(authController.deletePortfolio); //localhost:3000/users/dashboard/id
 
 
 module.exports = router;

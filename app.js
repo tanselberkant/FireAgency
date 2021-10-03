@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const fileUpload = require('express-fileupload');
+const methodOverride = require('method-override');
 const ejs = require('ejs');
 const pageRoute = require('./routes/pageRoute');
 const userRoute = require('./routes/userRoute');
@@ -45,6 +46,11 @@ app.use(
       mongoUrl:
         'mongodb+srv://tansel:EaYeSA64CjdDOMaX@cluster0.fwtyd.mongodb.net/fireAgency-db?retryWrites=true&w=majority',
     }),
+  })
+);
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
   })
 );
 

@@ -36,6 +36,7 @@
                           <th scope="col">Image</th>
                           <th scope="col">Update</th>
                           <th scope="col">Delete</th>
+                          
                         </tr>
                       </thead>
                       <tbody>
@@ -43,17 +44,19 @@
                         <tr>
                             <th scope="row"><%= portfolios[i]._id %></th>
                             <td><%= portfolios[i].title %></td>
-                            <td><%= portfolios[i].description %></td>
+                            <td><%= portfolios[i].description.substring(0,70) + '...' %></td>
                             <td><%= portfolios[i].client %></td>
-                            <td><%= portfolios[i].image %></td>
                             <td>
-                                <button class="btn btn-lg btn-warning rounded-0 text-white" href="#"
+                                <img src="<%= portfolios[i].image %>" alt="Image" class="img-fluid" style="max-height: 80px; max-width: 60px;">                                
+                            </td>
+                            <td>
+                                <button class="btn btn-warning rounded-0 text-white" href="#"
                                 data-toggle="modal" data-target="#updatePortfolio"><span>Update</span></button>
                             </td>
                             <td>
-                                <a class="btn btn-danger rounded-0 text-white" href="#"
-                                onclick="return confirm('Are You Sure')"><span>Delete</span></a>
-                            </td>
+                                <a class="btn btn-danger rounded-0 text-white" href="/users/dashboard/<%= portfolios[i]._id %>?_method=DELETE"
+                                onclick="return confirm('Are You Sure?')"><span>Delete</span></a>
+                            </td>                            
                         </tr>
                         <% } %>
                       </tbody>

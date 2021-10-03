@@ -57,7 +57,7 @@ exports.getDashboardPage = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.session.userID });
     if (user.role === 'admin') {
-      const portfolios = Portfolio.find();
+      const portfolios = await Portfolio.find();
       res.status(200).render('dashboard', {
         page_name: 'dashboard',
         portfolios,
@@ -87,15 +87,34 @@ exports.createPortfolio = async (req, res) => {
     let myRandom = (Math.random() + 1).toString(36).substring(7);
 
     let portImage = req.files.image;
-    let uploadPath = __dirname + '/../public/uploads/'+ myRandom + portImage.name ;
+    let uploadPath =
+      __dirname + '/../public/uploads/' + myRandom + portImage.name;
 
     portImage.mv(uploadPath, async () => {
       await Portfolio.create({
-        ... req.body,
-        image: '/uploads/'+ myRandom + portImage.name,
+        ...req.body,
+        image: '/uploads/' + myRandom + portImage.name,
       });
       res.status(201).redirect('/users/dashboard');
     });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      error,
+    });
+  }
+};
+
+// Delete Portfolio
+exports.deletePortfolio = async (req, res) => {
+  try {
+
+    const portfolio = await Portfolio.findOne({ _id: req.params.id });
+    let deletedImage = __dirname + '/../public' + portfolio.image;
+    fs.unlinkSync(deletedImage);
+    await Portfolio.findByIdAndRemove(req.params.id);
+    res.redirect('/users/dashboard');
+
   } catch (error) {
     res.status(400).json({
       status: 'fail',

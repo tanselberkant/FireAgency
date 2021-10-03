@@ -1,7 +1,11 @@
-exports.getIndexpage = (req, res) => {
+const Portfolio = require('../models/Portfolio');
+
+exports.getIndexpage = async (req, res) => {
   console.log(req.session.userID)
+  const portfolios = await Portfolio.find();
   res.status(200).render('index', {
-    page_name : 'index'
+    page_name : 'index',
+    portfolios
   });
 };
 
