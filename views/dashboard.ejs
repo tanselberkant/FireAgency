@@ -3,5 +3,107 @@
 <%- include ('partials/_navigation.ejs') -%>
 
 <div class="container m-5">
-    <h2>User Dashboard</h2>
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 blog-post-single text-center">
+                    <h3>Admin Dashboard</h3>
+                </div>
+                <!--MODAL BUTTON -->
+                <!-- <div class="col-lg-12 blog-post-single text-center">
+                    <button class="btn btn-lg btn-warning rounded-0 text-white" href="#" 
+                    data-toggle="modal" data-target="#addPortfolio"><span>Create New Portfolio</span></button>
+                </div> -->
+                <div class="col-lg-12 blog-post-single text-center">
+                    <a class="btn btn-lg btn-warning rounded-0 text-white" data-bs-toggle="modal" href="#addPortfolio">
+                        <span>Create New Portfolio</span>
+                    </a>
+                </div>
+               
+            </div>
+            <div class="row mt-5">
+                <div class="col-lg-12 blog-post-single text-center">
+                    <h6>My Portfolios</h6>
+                </div>
+                <!--LISTING PORTFOLIOS-->
+                <table class="table">
+                    <thead>
+                        <tr>
+                          <th scope="col">ID#</th>
+                          <th scope="col">Title</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Client</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Update</th>
+                          <th scope="col">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for (let i = 0; i < portfolios.length; i++)   { %>
+                        <tr>
+                            <th scope="row"><%= portfolios[i]._id %></th>
+                            <td><%= portfolios[i].title %></td>
+                            <td><%= portfolios[i].description %></td>
+                            <td><%= portfolios[i].client %></td>
+                            <td><%= portfolios[i].image %></td>
+                            <td>
+                                <button class="btn btn-lg btn-warning rounded-0 text-white" href="#"
+                                data-toggle="modal" data-target="#updatePortfolio"><span>Update</span></button>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger rounded-0 text-white" href="#"
+                                onclick="return confirm('Are You Sure')"><span>Delete</span></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                </table>     
+            </div>
+             <!--ADD MODAL-->
+             <div class="modal fade" id="addPortfolio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body customer-box">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="Login">
+                                    <form method="POST" action="/users/dashboard" class="form-horizontal" encType="multipart/form-data">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="text" name="title" class="form-control"  placeholder="Portfolio Title">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <textarea rows="8" name="description" class="form-control" placeholder="Portfolio Description"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="text" name="client" class="form-control"  placeholder="Client Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="file" name="image" class="form-control-file">
+                                            </div>
+                                        </div>								
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <button type="submit" class="btn btn-light btn-radius btn-brd grd1">Submit</button>
+                                                <button type="submit" class="btn btn-light btn-radius btn-brd grd1"
+                                            data-dismiss="modal" aria-hidden="true"> Cancel </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+
+        </div>
+    </div>
 </div>
+<%- include('partials/_footer.ejs') -%>

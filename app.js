@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const fileUpload = require('express-fileupload');
 const ejs = require('ejs');
 const pageRoute = require('./routes/pageRoute');
 const userRoute = require('./routes/userRoute');
@@ -34,20 +35,24 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(session({
-  secret: 'fire_nation_zuko',
-  resave: false,
-  saveUninitialized: true,
-  store: MongoStore.create({
-    mongoUrl: 'mongodb+srv://tansel:EaYeSA64CjdDOMaX@cluster0.fwtyd.mongodb.net/fireAgency-db?retryWrites=true&w=majority',
+app.use(fileUpload());
+app.use(
+  session({
+    secret: 'fire_nation_zuko',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl:
+        'mongodb+srv://tansel:EaYeSA64CjdDOMaX@cluster0.fwtyd.mongodb.net/fireAgency-db?retryWrites=true&w=majority',
+    }),
   })
-}))
+);
 
 // ROUTES
-app.use('*',(req,res,next) => {
+app.use('*', (req, res, next) => {
   userIN = req.session.userID;
   next();
-})
+});
 app.use('/', pageRoute);
 app.use('/users', userRoute);
 
