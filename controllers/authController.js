@@ -28,7 +28,7 @@ exports.loginUser = (req, res) => {
           if (success) {
             // User session
             req.session.userID = user._id;
-            res.status(200).redirect('/');
+            res.status(200).redirect('/users/dashboard');
           } else {
             // Your password is not correct
             res.status(400).redirect('/login');
@@ -122,3 +122,21 @@ exports.deletePortfolio = async (req, res) => {
     });
   }
 };
+
+
+// Update Portfolio
+exports.updatePortfolio = async (req,res) => {
+  try {
+    const portfolio = await Portfolio.findOne({_id: req.params.id})
+    portfolio.title = req.body.title
+    portfolio.description = req.body.description
+    portfolio.client = req.body.client
+    portfolio.save();
+    res.redirect('/users/dashboard')
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      error
+    })
+  }
+}

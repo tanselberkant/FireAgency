@@ -9,6 +9,7 @@ router.route('/logout').get(authController.logOutUser);  //localhost:3000/users/
 router.route('/dashboard').get(authController.getDashboardPage);   //localhost:3000/users/dashboard
 router.route('/dashboard').post(authController.createPortfolio);   //localhost:3000/users/dashboard
 router.route('/dashboard/:id').delete(authController.deletePortfolio); //localhost:3000/users/dashboard/id
+router.route('/dashboard/:id').put(authController.updatePortfolio);
 
 
 module.exports = router;
